@@ -15,11 +15,10 @@ import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Service
-
 public class WeatherServiceImpl implements WeatherService {
     private final String apiValue = "http://api.weatherapi.com/v1/current.json?";
 
-    private final String key = "eed5b32c34f0470b857172122241908";
+    private final String key = "b729ce3e5a144134b97171752241908";
 
     @Override
     public Weather getCityWeather(String city) throws IOException {
@@ -29,9 +28,7 @@ public class WeatherServiceImpl implements WeatherService {
         Response response = client.newCall(request).execute();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String responseBody = response.body().toString();
-
-        log.info(responseBody);
+        String responseBody = response.body().string();
 
         JsonNode jsonNode = objectMapper.readTree(responseBody);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
