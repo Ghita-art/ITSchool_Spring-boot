@@ -1,6 +1,7 @@
 package com.itschool.project.controllers;
 
 import com.itschool.project.models.User;
+import com.itschool.project.models.dtos.UserDTO;
 import com.itschool.project.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +18,8 @@ public class UserController {
     }
 
     @PostMapping("/api/users")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
 
-        return ResponseEntity.ok(userService.createUser(user));
+        return ResponseEntity.ok(userService.createUser(userDTO));
     }
 }

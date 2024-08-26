@@ -1,6 +1,9 @@
 package com.itschool.project.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itschool.project.models.User;
+import com.itschool.project.models.dtos.UserDTO;
+import com.itschool.project.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -13,18 +16,33 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private List<User> users = new ArrayList<>();
+    private final UserRepository userRepository;
+    private final ObjectMapper objectMapper;
 
+    public UserServiceImpl(UserRepository userRepository, ObjectMapper objectMapper) {
+        this.userRepository = userRepository;
+        this.objectMapper = objectMapper;
+    }
 
     @Override
-    public User createUser(User user) {
-        if (user.getEmail().length() < 3) {
-            throw new RuntimeException("Invalid email address.");
+    public UserDTO createUser(UserDTO userDTO) {
+        if (userDTO.getEmail().length() < 3) {
+            throw new RuntimeException("Invalid email!");
         }
-        user.setId(UUID.randomUUID());
 
-        users.add(user);
-        log.info("User {} was saved!", user.getId());
+        User user = new User();
+        User userEntityToBeSaved = objectMapper.convertValue(userDTO, User.class);
+        User userResponseEntity = userRepository.save(userEntityToBeSaved);
+        log.info("Created user with id: {}", userResponseEntity.getId());
 
-        return user;
+        return objectMapper.convertValue(userResponseEntity, UserDTO.class);
+    }
+
+    @Override
+    public List<UserDTO> getUsers() {
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(user -> objectMapper.convertValue(user, UserDTO.class))
+                .toList();
     }
 }
