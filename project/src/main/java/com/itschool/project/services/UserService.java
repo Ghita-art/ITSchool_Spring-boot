@@ -1,6 +1,5 @@
 package com.itschool.project.services;
 
-import com.itschool.project.models.User;
 import com.itschool.project.models.dtos.UserDTO;
 
 import java.util.List;

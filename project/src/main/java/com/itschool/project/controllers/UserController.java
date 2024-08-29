@@ -1,6 +1,5 @@
 package com.itschool.project.controllers;
 
-import com.itschool.project.models.User;
 import com.itschool.project.models.dtos.UserDTO;
 import com.itschool.project.services.UserService;
 import org.springframework.http.ResponseEntity;

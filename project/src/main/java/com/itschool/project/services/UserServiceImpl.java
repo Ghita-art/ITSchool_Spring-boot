@@ -1,7 +1,7 @@
 package com.itschool.project.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.itschool.project.models.User;
+import com.itschool.project.models.entities.User;
 import com.itschool.project.models.dtos.UserDTO;
 import com.itschool.project.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Service
